@@ -1,3 +1,4 @@
+import time
 from typing import Dict, Iterator, Iterable, List
 
 import ffmpeg
@@ -10,9 +11,10 @@ class SimpleTwitchStreamReceiver(Iterable):
     An iterable created given URL to a twitch stream and a quality preset.
     """
 
-    def __init__(self, url: str, quality: str = "best"):
+    def __init__(self, url: str, quality: str = "best", timeout: float = 5.0):
         self.quality: str = quality
         self.url: str = url
+        self.timeout = timeout
 
     @property
     def available_qualities(self) -> List[str]:
@@ -53,6 +55,7 @@ class SimpleTwitchStreamReceiver(Iterable):
             while True:
                 in_bytes = process.stdout.read(width * height * 3)
                 if not in_bytes:
+                    time.sleep(self.timeout)
                     continue
                 frame = np.frombuffer(in_bytes, np.uint8).reshape([height, width, 3])
                 yield frame
