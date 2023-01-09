@@ -9,7 +9,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "simple_twitch_stream_receiver"
-version = "0.0.1"
+version = "0.0.2"
 authors = [
   { name="Jan Pawłowski", email="janpawlowskiof@gmail.com" },
 ]
